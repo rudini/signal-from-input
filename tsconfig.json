@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "declaration": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "lib": ["dom", "es2015"],
+        "target": "es2015",
+        "module": "es2015",
+        "moduleResolution": "node",
+        "noImplicitAny": false,
+        "sourceMap": true
+    },
+    "angularCompilerOptions": {
+        "compilationMode": "partial-Ivy"
+    },
+    "exclude": ["node_modules", "test", "dist"],
+}
