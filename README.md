@@ -25,11 +25,11 @@ Suppose you have the following component:
 })
 export class AppComponent {
     @Input() showData: boolean;
-    data$: Observable<Data>;
+    _data: Signal<Data>;
 
     constructor(private store: Store) {
-        this.data$ = this.store.pipe(
-            select(selectData));
+        this._data = selectSignal(this.store.pipe(
+            select(selectData)));
     }
 }
 ```
@@ -41,7 +41,7 @@ The signature of the function looks like this:
 ```typescript
 fromInput: <T>(target: T) =>
     <K extends keyof T>(name: K) =>
-        Signal<T[K]>;
+        Signal<T[K] | undefined>;
 ```
 
 The input can now be turned into a signal from the input field using the following call.
@@ -59,19 +59,20 @@ import { fromInput } from 'signal-from-input';
     selector: 'app-component',
     template: `
         <div *ngIf="showData">Input</div>
-        <div *ngIf="showDataSig()">Input as signal</div>
+        <div *ngIf="_showData()">Input as signal</div>
     `,
 })
 export class AppComponent {
     @Input() showData: boolean;
-    showDataSig: Signal<boolean>;
-    dataSig: Signal<Data>;
+    _showData: Signal<boolean>;
+    _data: Signal<Data>;
 
     constructor(private store: Store) {
-        this.showDataSig = fromInput<AppComponent>(this)('showData');
-        this.dataSig = this.store.pipe(select(selectData));
+        this._showData = fromInput<AppComponent>(this)('showData');
+        this._data = this.store.pipe(select(selectData));
 
-        // now you can connect observables as you like
+        // now you can compute signals as you like
+        this._computed = computed(() => this._showData ? this._data : ... );
     }
 }
 ```

@@ -1,7 +1,7 @@
 {
     "name": "signal-from-input",
     "version": "16.0.0",
-    "description": "Small library that provides a typesave extension to use angular component input fields as RxJS Observables",
+    "description": "Small library that provides a typesave extension to use angular component input fields as Signals",
     "main": "dist/index.js",
     "scripts": {
         "build": "ng-packagr -p ng-package.json",
